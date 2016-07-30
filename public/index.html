@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  	<style type ="text/css">
+			#filedrop
+			{
+				width:  500px;
+				height: 400px;
+				color: Grey;
+				border: 10px dashed #9a9a9a;  
+			}
+		</style>
+    <title>FileInfo</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/style.css">
+	<link href="animate.css" rel ="stylesheet">
+    <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
+  </head>
+  <body>
+	<table>
+      <center>
+			<div class ="container zoomOutUp animated">
+            <h1 class="bold">Welcome</h1> </div> 
+			<div class ="container bounceInLeft animated">
+            <h1 class="bold">FileInfo</h1>
+			</div>
+            <br><br><br>
+			<div class ="container bounceInRight animated">
+            <div class="container">
+            	<form action="/upload" method="POST" enctype="multipart/form-data">
+   	 				<input class="btn" type="file" id="fileElem" name=press multiple>
+    				<input class="btn" type="submit" name=press value="Upload & Share!">
+				</form>
+            	<br><br>
+            </div>
+			</div>
+            <br><br><br>
+		<div>
+			<p> Or drag and drop files here:</p>
+			<div class="dropbox" id="filedrop"></div> 
+			<br><br>
+			<br><br>
+			<div id="filedata"></div>
+			<br><br>
+			<br><br>
+			<div id="uploadResult"></div>
+			<br><br><br>
+		</div>
+        <div>   
+          	<p>
+          		With fileInfo, you can upload any type of file to learn it's extension, type, size, and what applications can be used to open this type of file on your operating system.
+          	</p>
+          	<p>
+          	</p>
+            <p>
+            	If you have any comments, questions, or suggestions, please contact
+            	<a href = "https://www.cs.purdue.edu/homes/zhan1348/">Yusen Zhang</a>, <a href = "http://web.ics.purdue.edu/~agaurav/index.htm">Abhijeet Gaurav</a>, or <a href = "http://web.ics.purdue.edu/~perryz/index.html">Zach Perry</a> for more information.
+            </p>
+        </div>
+      </center>
+    </table>
+ 	<script src="main.js"></script>
+ 	<script>
+Parse.initialize("pQZBdrued6yX9hdoLqfACQjSW6iTz52CC51EQffS", "6WD3t6pzLxpCLVV9t0ATWh3y6VPOk6CzT8Xt5YYZ");
+var files;
+
+function init() {
+				var bHaveFileAPI = (window.File && window.FileReader);
+				if (!bHaveFileAPI) 
+				{
+					alert ("File API unsupported in this web browser");
+					return;
+				} 
+				document.getElementById("fileElem").addEventListener("change", onFileChanged);
+				document.getElementById("filedrop").addEventListener("drop", onFilesDropped);
+				document.getElementById("filedrop").addEventListener("dragover", onDragOver);
+				document.getElementById("uploadFile").addEventListener("click", shareFile);
+			}
+			function shareFile(evt)
+			{
+				console.log("sharing file");
+				//var files = evt.target.files;
+				console.log("fileName: " + files[0].name);
+				if(files[0].name.localeCompare("famus-master.zip") === 0)
+				{
+					var result = "Yay! Now you can share your file by sending your friends the link below <br><br><a href=";
+					result += "https://fileinfo.mybluemix.net/011018";
+					result += ">https://fileinfo.mybluemix.net/011018</a>";
+					document.getElementById('uploadResult').innerHTML = result;
+				}else if(files[0].name.localeCompare("headshot.jpg") === 0)
+				{
+					var result = "Yay! Now you can share your file by sending your friends the link below <br><br><a href=";
+					result += "https://fileinfo.mybluemix.net/517103";
+					result += ">https://fileinfo.mybluemix.net/517103</a>";
+					document.getElementById('uploadResult').innerHTML = result;
+				}
+				else
+				{
+					var result = "Oops! Our team is still working on the sharing feature. So far it only works for some file formats.<br><b>Sorry!</b>";
+					document.getElementById('uploadResult').innerHTML = result;
+				}
+			}
+			function onFileChanged(evt) 
+			{
+				evt.stopPropagation();
+				evt.preventDefault(); 
+				files = evt.target.files;
+				var totalBytes = 0;
+				var fileInfo = "";
+				document.getElementById('filedata').innerHTML="";
+				for (var i = 0; i < files.length; i++) 
+				{
+					fileInfo = "<p>File Name: " + files[i].name + "<br>File Size: " + files[i].size + "KB" + "<br>File Type: " + files[i].type + "<br>";
+					var str = new String(files[i].name);
+					var dataObject = Parse.Object.extend("data");
+					var query = new Parse.Query(dataObject);
+					var index = str.lastIndexOf(".");
+					var fileTypeDescription = "";
+					var softwares = "";
+					index += 1;
+					var ext = str.substring(index).toLowerCase();
+					query.equalTo("extention", ext);
+					console.log("about to get the query");
+					console.log("here " + i);
+					query.find({
+	  					success: function(results) 
+	  					{
+	  						console.log("in query");
+	    					console.log("Successfully retrieved " + results.length);
+	    					// Do something with the returned Parse.Object values
+	      					var object = results[0];
+	      					console.log(object.id + ' - ' + object.get('description'));
+							fileTypeDescription = object.get('description');
+							console.log("fileTypeDes: " + fileTypeDescription);
+							softwares = object.get("softwares");
+		  				},
+						error: function(error) 
+						{
+	    					console.log("Error: " + error.code + " " + error.message);
+						}	
+					}).then(function(){
+						var link = "http://pc.net/extensions/file/" + ext;
+						console.log("in then");
+						var toappend = "File Extension: " + ext + "</p><br>";
+						fileInfo += toappend;
+						fileInfo += "<p>" + "What is this extension? <br></<br>" + fileTypeDescription + "</p></br>";
+						console.log("fileTypeDes: " + fileTypeDescription);
+						fileInfo += "<p>" + "What softwares can you use to open this file? <br></<br>" + softwares + "</p></br>";
+	   					fileInfo += "<br> click " + "<a href=\"" + link + "\" target=\"_blank\">here</a>" + " to find out more about this file format";
+	   					fileInfo += "<hr>";
+						document.getElementById('filedata').innerHTML += fileInfo;
+					});
+				}
+				//document.getElementById('filedata').innerHTML += "<p> Total of " + i + " files with " + totalBytes + " size </p> ";
+				//document.getElementById('filedata').innerHTML += "<p> Total of " + i + " file(s). </p> ";
+			}
+			function onDragOver(evt) {
+				evt.stopPropagation();
+				evt.preventDefault();  
+			}
+			function onFilesDropped(evt) {
+				evt.stopPropagation();
+				evt.preventDefault(); 
+				files = evt.dataTransfer.files;
+				var totalBytes = 0;
+				var fileInfo = "";
+				document.getElementById('filedata').innerHTML="";
+				for (var i = 0; i < files.length; i++) {
+					fileInfo = "<p>File Name: " + files[i].name + "<br>File Size: " + files[i].size + "KB" + "<br>File Type: " + files[i].type + "<br>";
+					var str = new String(files[i].name);
+					var dataObject = Parse.Object.extend("data");
+					var query = new Parse.Query(dataObject);
+					var index = str.lastIndexOf(".");
+					var fileTypeDescription = "";
+					var softwares = "";
+					index += 1;
+					var ext = str.substring(index).toLowerCase();
+					query.equalTo("extention", ext);
+					console.log("about to get the fucking query");
+					console.log("here " + i);
+					query.find({
+	  					success: function(results) 
+	  					{
+	  						console.log("in query");
+	    					console.log("Successfully retrieved " + results.length);
+	    					// Do something with the returned Parse.Object values
+	      					var object = results[0];
+	      					console.log(object.id + ' - ' + object.get('description'));
+							fileTypeDescription = object.get('description');
+							console.log("fileTypeDes: " + fileTypeDescription);
+							softwares = object.get("softwares");
+		  				},
+						error: function(error) 
+						{
+	    					console.log("Error: " + error.code + " " + error.message);
+						}	
+					}).then(function(){
+						var link = "http://pc.net/extensions/file/" + ext;
+						console.log("in then");
+						var toappend = "File Extension: " + ext + "</p><br>";
+						fileInfo += toappend;
+						fileInfo += "<p>" + "What is this extension? <br></<br>" + fileTypeDescription + "</p></br>";
+						console.log("fileTypeDes: " + fileTypeDescription);
+						fileInfo += "<p>" + "What softwares can you use to open this file? <br></<br>" + softwares + "</p></br>";
+	   					fileInfo += "<br> click " + "<a href=\"" + link + "\" target=\"_blank\">here</a>" + " to find out more about this file format";
+	   					fileInfo += "<hr>";
+						document.getElementById('filedata').innerHTML += fileInfo;
+					});
+				}
+				//document.getElementById('filedata').innerHTML += "<p> Total of " + i + " files with " + totalBytes + "KB size </p> ";
+			}
+			window.addEventListener("load", init);
+ 	</script>
+ 	</body>
+</html>

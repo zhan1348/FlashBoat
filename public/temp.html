@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<style type ="text/css">
+			#filedrop
+			{
+				width:  500pxpx;
+				height: 400px;
+				color: Grey;
+				border: 10px dashed #9a9a9a;  
+			}
+		</style>
+    <title>FileInfo</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/style.css">
+			<script type="text/javascript">
+			function init() {
+				var bHaveFileAPI = (window.File && window.FileReader);
+				if (!bHaveFileAPI) {
+					alert ("File API unsupported in this web browser");
+					return;
+				} 
+				document.getElementById ("fileElem").addEventListener("change", onFileChanged);
+				document.getElementById("filedrop").addEventListener("drop", onFilesDropped);
+				document.getElementById("filedrop").addEventListener("dragover", onDragOver);
+			}
+			function onFileChanged(evt) {
+				var files = evt.target.files;
+				var totalBytes = 0;
+				for (var i = 0; i < files.length; i++) {
+					var fileInfo = "<p>File Name: " + files[i].name + "; File Size: " + files[i].size + " File Type: " + files[i].type + "<br>";
+					var str = new String(files[i].name);
+					var index = str.indexOf(".");
+					index += 1;
+					var ext= str.substring(index).toLowerCase();
+					var link = "http://pc.net/extensions/file/" + ext;
+					var toappend = "File Extension: " + ext + "     Click " + "<a href=\"" + link + "\" target=\"_blank\">here</a>" + " to know more about this extension" + "</p><br>";
+					fileInfo += toappend;
+   					totalBytes += files[i].size;
+					document.getElementById('filedata').innerHTML += fileInfo;
+				}
+				document.getElementById('filedata').innerHTML += "<p> Total of " + i + " files with " + totalBytes + " size </p> ";
+			}
+			function onDragOver(evt) {
+				evt.stopPropagation();
+				evt.preventDefault();  
+			}
+			function onFilesDropped(evt) {
+				evt.stopPropagation();
+				evt.preventDefault(); 
+				var files = evt.dataTransfer.files;
+				var totalBytes = 0;
+
+				document.getElementById('filedata').innerHTML="";
+				for (var i = 0; i < files.length; i++) {
+					var fileInfo = "<p>File Name: " + files[i].name + "; File Size: " + files[i].size + " File Type: " + files[i].type + "<br>";
+					var str = new String(files[i].name);
+					var index = str.indexOf(".");
+					index += 1;
+					var ext= str.substring(index).toLowerCase();
+					var link = "http://pc.net/extensions/file/" + ext;
+					var toappend = "File Extension: " + ext + "    Click " + "<a href=\"" + link + "\" target=\"_blank\">here</a>" + " to know more about this extension" + "</p><br>";
+					fileInfo += toappend;
+   					totalBytes += files[i].size;
+					document.getElementById('filedata').innerHTML += fileInfo;
+				}
+				document.getElementById('filedata').innerHTML += "<p> Total of " + i + " files with " + totalBytes + " size </p> ";
+			}
+			window.addEventListener("load", init);
+		</script>
+  </head>
+
+  <body>
+	<table>
+      <center>
+            <h1 class="bold">FileInfo</h1>
+            <br><br><br>
+            <div class="container">
+				<form action ="">
+            	<input class="btn" type="file" id="fileElem" multiple = "multiple" />
+				</form>
+            	<br><br>
+            </div>
+            <br><br><br>
+		<div>
+			<p> Or drag and drop files here:</p>
+			<div id="filedrop"></div> 
+			<br><br>
+			<button class="btn" type="submit">Upload & Share</button>
+			<br><br>
+			<div id="filedata"></div>
+			<br><br><br>
+		</div>
+        <div>    
+          	<p>
+          		Welcome! With our website, you can upload any type of file and we will tell you its extension as well as what applications you should use to open this file.
+          	</p>
+            <p>
+            	If you have any questions or suggestions, feel free to contact
+            	<a href = "https://www.cs.purdue.edu/homes/zhan1348/">Yusen</a>, <a href = "http://web.ics.purdue.edu/~agaurav/index.htm">Abhijeet</a> or Zach for more information.
+            </p>
+        </div>
+      </center>
+    </table>
+  </body>
+
+</html>
