@@ -62,7 +62,7 @@ app.post('/upload',function(req,res){
 			success: function(object) {
 				console.log("successfully created object");
 				var query = new Parse.Query(DataObject);
-				console.log("looking for query");
+				console.log("getting query");
 				query.equalTo("link", fileLink);
 				query.find({
 					success: function(results) {
@@ -86,7 +86,7 @@ app.post('/upload',function(req,res){
   	}
 });
 
-router.get('/:objectId', function(req, res, next) {
+app.get('/:objectId', function(req, res, next) {
 	var objectId = req.params.objectId
-	var object = Parse.Object.extend("DataPool");
+	var dataObject = Parse.Object.extend("DataPool");
 }
