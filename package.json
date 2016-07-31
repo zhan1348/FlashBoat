@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "description": "A sample nodejs app for Bluemix",
   "scripts": {
-    "start": "node app.js",
-    "install": "npm install --save parse-sdk"
+    "start": "npm install --save parse-sdk"
   },
   "dependencies": {
     "cfenv": "1.0.x",
