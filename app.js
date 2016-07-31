@@ -6,7 +6,7 @@
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
-var Parse = require('parse');
+var Parse = require('parse/node');
 var express = require('express');
 var multer = require('multer');
 var done = false;
