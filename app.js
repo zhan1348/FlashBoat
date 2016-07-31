@@ -61,24 +61,24 @@ app.post('/upload',function(req,res){
 		}, {
 			success: function(object) {
 				console.log("successfully created object");
+				var query = new Parse.Query(DataObject);
+				query.equalTo("link", fileLink);
+				query.find({
+					success: function(results) {
+						alert("Successfully retrieved " + results.length + " scores.");
+						// Do something with the returned Parse.Object values
+						var dataObject = results[0];
+						res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
+							+ rootUrl + dataObject.id
+							+ "</html>");
+					},
+					error: function(error) {
+						alert("Error: " + error.code + " " + error.message);
+					}
+				});
 			},
 			error: function(object, error) {
 				console.log(error);
-			}
-		});
-		var query = new Parse.Query(DataObject);
-		query.equalTo("link", fileLink);
-		query.find({
-			success: function(results) {
-				alert("Successfully retrieved " + results.length + " scores.");
-				// Do something with the returned Parse.Object values
-				var dataObject = results[0];
-				res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
-					+ rootUrl + dataObject.id
-					+ "</html>");
-			},
-			error: function(error) {
-				alert("Error: " + error.code + " " + error.message);
 			}
 		});
 		console.log("parsed");
