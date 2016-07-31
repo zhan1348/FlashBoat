@@ -6,6 +6,7 @@
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
+var Parse = require('parse');
 var express = require('express');
 var multer = require('multer');
 var done = false;
@@ -23,7 +24,7 @@ app.use(express.static(__dirname + '/public'));
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
-
+Parse.initialize("pQZBdrued6yX9hdoLqfACQjSW6iTz52CC51EQffS", "6WD3t6pzLxpCLVV9t0ATWh3y6VPOk6CzT8Xt5YYZ");
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
@@ -55,6 +56,11 @@ app.post('/upload',function(req,res){
     	res.end("<link rel=\"stylesheet\" href=\"stylesheets/style.css\">" +
 			"<b>Share this link with your friend!</b><br>"
 			+ fileLink);
+		var TestObject = Parse.Object.extend("TestObject");
+		var testObject = new TestObject();
+		testObject.save({foo: "bar"}).then(function(object) {
+			alert("yay! it worked");
+		});
   	}
 });
 
