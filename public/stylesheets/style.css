@@ -116,3 +116,16 @@ pre {
   background-image: linear-gradient(to bottom, #3cfc6f, #3498db);
   text-decoration: none;
 }
+
+.linkfont {
+	font-weight: normal;
+	color: #FFFFFF;
+	border: 10px solid #b5a759;
+	letter-spacing: 1pt;
+	word-spacing: 2pt;
+	font-size: 20px;
+	text-align: left;
+	font-family: impact, sans-serif;
+	line-height: 1;
+}
+																																																																			 </html>

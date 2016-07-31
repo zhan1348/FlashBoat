@@ -84,9 +84,10 @@ app.post('/upload',function(req,res){
 		res.end("<!DOCTYPE html><html>"
 			+ "<link rel=\"stylesheet\" href=\"stylesheets/style.css\">" +
 			"<body><table><center>" +
-			"<b class=\"bold\">Share this link with your friend!</b><br>" +
+			"<b class=\"bold\">Share this link with your friends!</b><br>" +
+			"<p class=\"linkfont\"> "+
 			fileLink +
-			"</body></table></center></html>");
+			"</p></body></table></center></html>");
 		console.log("parsed");
   	}
 });
