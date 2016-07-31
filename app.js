@@ -53,12 +53,10 @@ app.post('/upload',function(req,res){
 	if(done===true){
     	console.log(req.files);
     	fileLink = "https://usen.mybluemix.net/uploads/" + fileLink + extention;
-    	res.end("<link rel=\"stylesheet\" href=\"stylesheets/style.css\">" +
-			"<b>Share this link with your friend!</b><br>"
-			+ fileLink);
-		var TestObject = Parse.Object.extend("TestObject");
+    	res.end("<link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>" + fileLink);
+		var TestObject = Parse.Object.extend("DataPool");
 		var testObject = new TestObject();
-		testObject.save({foo: "bar"}).then(function(object) {
+		testObject.save({link: fileLink}).then(function(object) {
 			alert("yay! it worked");
 		});
 		console.log("parsed");
