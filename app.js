@@ -51,7 +51,6 @@ app.use(multer({ dest: './public/uploads/',
 }));
 
 app.post('/upload',function(req,res){
-	var objectId = "";
 	if(done===true){
     	console.log(req.files);
     	fileLink = "https://usen.mybluemix.net/uploads/" + fileLink + extention;
@@ -61,15 +60,27 @@ app.post('/upload',function(req,res){
 			link: fileLink
 		}, {
 			success: function(object) {
-				objectId = object.id;
+				console.log("successfully created object");
 			},
 			error: function(object, error) {
 				console.log(error);
 			}
 		});
-		res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
-			+ rootUrl + objectId
-			+ "</html>");
+		var query = new Parse.Query(DataObject);
+		query.equalTo("link", fileLink);
+		query.find({
+			success: function(results) {
+				alert("Successfully retrieved " + results.length + " scores.");
+				// Do something with the returned Parse.Object values
+				var dataObject = results[0];
+				res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
+					+ rootUrl + dataObject.id
+					+ "</html>");
+			},
+			error: function(error) {
+				alert("Error: " + error.code + " " + error.message);
+			}
+		});
 		console.log("parsed");
   	}
 });
