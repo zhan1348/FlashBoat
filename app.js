@@ -6,7 +6,7 @@
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
-var Parse = require('parse');
+var Parse = require('parse/node').Parse;
 var express = require('express');
 var multer = require('multer');
 var done = false;
@@ -61,6 +61,7 @@ app.post('/upload',function(req,res){
 		testObject.save({foo: "bar"}).then(function(object) {
 			alert("yay! it worked");
 		});
+		console.log("parsed");
   	}
 });
 

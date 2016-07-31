@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "description": "A sample nodejs app for Bluemix",
   "scripts": {
-    "prepublish": "npm install --save parse-sdk",
     "start": "node app.js"
   },
   "dependencies": {
     "cfenv": "1.0.x",
     "express": "4.12.x",
     "multer": "0.1.6",
-    "parse-sdk": "^1.5.0"
+    "parse-sdk": "^1.5.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "should": "7.1.0",
