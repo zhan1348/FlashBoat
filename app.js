@@ -86,7 +86,9 @@ app.post('/upload',function(req,res){
   	}
 });
 
-app.get('/:objectId', function(req, res, next) {
+app.get('/:objectId', function(req, res) {
 	var objectId = req.params.objectId;
 	var dataObject = Parse.Object.extend("DataPool");
+	console.log(objectId);
+	console.log(dataObject);
 }
