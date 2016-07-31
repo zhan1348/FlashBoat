@@ -12,6 +12,7 @@ var multer = require('multer');
 var done = false;
 var fileLink = "";
 var extention = "";
+var rootUrl = "https://usen.mybluemix.net/";
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
@@ -34,7 +35,7 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 
 app.use(multer({ dest: './public/uploads/',
  	rename: function (fieldname, filename) {
-		fileLink = filename;
+		fileLink = filename+Date.now();
     	return fileLink;
   	},
 	onFileUploadStart: function (file) {
@@ -50,16 +51,25 @@ app.use(multer({ dest: './public/uploads/',
 }));
 
 app.post('/upload',function(req,res){
+	var objectId = "";
 	if(done===true){
     	console.log(req.files);
     	fileLink = "https://usen.mybluemix.net/uploads/" + fileLink + extention;
-    	res.end("<link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>" + fileLink);
-		var TestObject = Parse.Object.extend("DataPool");
-		var testObject = new TestObject();
-		testObject.save({link: fileLink}).then(function(object) {
-			alert("yay! it worked");
+		var DataObject = Parse.Object.extend("DataPool");
+		var object = new DataObject();
+		object.save({
+			link: fileLink
+		}, {
+			success: function(object) {
+				objectId = object.id;
+			},
+			error: function(object, error) {
+				console.log(error);
+			}
 		});
-
+		res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
+			+ rootUrl + objectId
+			+ "</html>");
 		console.log("parsed");
   	}
 });
