@@ -81,9 +81,12 @@ app.post('/upload',function(req,res){
 			}
 		});
 		*/
-		res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
-			+ fileLink
-			+ "</html>");
+		res.end("<!DOCTYPE html><html>"
+			+ "<link rel=\"stylesheet\" href=\"stylesheets/style.css\">" +
+			"<body><table><center>" +
+			"<b class=\"bold\">Share this link with your friend!</b><br>" +
+			fileLink +
+			"</body></table></center></html>");
 		console.log("parsed");
   	}
 });
