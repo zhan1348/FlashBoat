@@ -17,7 +17,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
 	<link href="animate.css" rel ="stylesheet">
-    <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.6.7.min.js">
+		$('#load').click(function() {
+			var $btn = $(this);
+			$btn.button('loading');
+			// simulating a timeout
+			setTimeout(function () {
+				$btn.button('reset');
+			}, 1000);
+		});
+	</script>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
 	<table>
@@ -32,7 +42,7 @@
             <div class="container">
             	<form action="/upload" method="POST" enctype="multipart/form-data">
    	 				<input class="btn" type="file" id="fileElem" name=press multiple>
-    				<input class="btn" type="submit" name=press value="U-Share!">
+					<input id="load" class="btn" type="submit" name=press value="U-Share!">
 				</form>
             	<br><br>
             </div>
