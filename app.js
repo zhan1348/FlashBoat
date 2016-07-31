@@ -52,7 +52,9 @@ app.post('/upload',function(req,res){
 	if(done===true){
     	console.log(req.files);
     	fileLink = "https://usen.mybluemix.net/uploads/" + fileLink + extention;
-    	res.end("<b>Share this link with your friend!</b><br>" + fileLink);
+    	res.end("<link rel=\"stylesheet\" href=\"stylesheets/style.css\">" +
+			"<b>Share this link with your friend!</b><br>"
+			+ fileLink);
   	}
 });
 
