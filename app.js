@@ -34,7 +34,7 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 
 app.use(multer({ dest: './public/uploads/',
  	rename: function (fieldname, filename) {
-		fileLink = filename+Date.now();
+		fileLink = filename;
     	return fileLink;
   	},
 	onFileUploadStart: function (file) {
@@ -59,6 +59,7 @@ app.post('/upload',function(req,res){
 		testObject.save({link: fileLink}).then(function(object) {
 			alert("yay! it worked");
 		});
+
 		console.log("parsed");
   	}
 });
