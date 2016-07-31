@@ -54,6 +54,7 @@ app.post('/upload',function(req,res){
 	if(done===true){
     	console.log(req.files);
     	fileLink = "https://usen.mybluemix.net/uploads/" + fileLink + extention;
+		/*
 		var DataObject = Parse.Object.extend("DataPool");
 		var object = new DataObject();
 		object.save({
@@ -69,9 +70,6 @@ app.post('/upload',function(req,res){
 						alert("Successfully retrieved " + results.length + " scores.");
 						// Do something with the returned Parse.Object values
 						var dataObject = results[0];
-						res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
-							+ rootUrl + dataObject.id
-							+ "</html>");
 					},
 					error: function(error) {
 						alert("Error: " + error.code + " " + error.message);
@@ -82,6 +80,10 @@ app.post('/upload',function(req,res){
 				console.log(error);
 			}
 		});
+		*/
+		res.end("<!DOCTYPE html><html><link rel=\"stylesheet\" href=\"stylesheets/style.css\"><b>Share this link with your friend!</b><br>"
+			+ fileLink
+			+ "</html>");
 		console.log("parsed");
   	}
 });
