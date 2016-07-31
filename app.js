@@ -87,7 +87,7 @@ app.post('/upload',function(req,res){
 			"<b class=\"bold\">Share this link with your friends!</b><br>" +
 			"<p class=\"linkfont\"> "+
 			fileLink +
-			"</p><a href=\"./public/index.html\" class=\"btn\">U-share again</a>" +
+			"</p><a href=\""+ rootUrl + "\"" + " class=\"btn\">U-share again</a>" +
 			"</body></table></center></html>");
 		console.log("parsed");
   	}
