@@ -87,6 +87,6 @@ app.post('/upload',function(req,res){
 });
 
 app.get('/:objectId', function(req, res, next) {
-	var objectId = req.params.objectId
+	var objectId = req.params.objectId;
 	var dataObject = Parse.Object.extend("DataPool");
 }
