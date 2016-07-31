@@ -51,19 +51,9 @@ app.use(multer({ dest: './public/uploads/',
 app.post('/upload',function(req,res){
 	if(done===true){
     	console.log(req.files);
-    	fileLink = "https://fileinfo.mybluemix.net/uploads/" + fileLink + extention;
+    	fileLink = "https://usen.mybluemix.net/uploads/" + fileLink + extention;
     	res.end("<b>Share this link with your friend!</b><br>" + fileLink);
   	}
 });
 
 console.log("before posting");
-
-app.get('/011018', function (req, res) {
-	res.writeHead(301,{Location: 'https://fileinfo.mybluemix.net/famus-master.zip'});
-  	res.end();
-});
-
-app.get('/517103', function (req, res) {
-	res.writeHead(301,{Location: 'https://fileinfo.mybluemix.net/headshot.jpg'});
-  	res.end();
-});
