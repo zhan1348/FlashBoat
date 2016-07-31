@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A sample nodejs app for Bluemix",
   "scripts": {
-    "install": "npm install",
+    "install": "npm install parse",
     "start": "node app.js"
   },
   "dependencies": {
