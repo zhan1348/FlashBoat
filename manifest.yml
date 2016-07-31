@@ -3,6 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: fileInfo
-  host: fileinfo
+  name: usen
+  host: usen
   disk_quota: 1024M
