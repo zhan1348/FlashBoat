@@ -1,3 +1,3 @@
 # FlashBoat
 File sharing website
-URL: https://usen.mybluebix.net
+URL: https://usen.mybluemix.net
